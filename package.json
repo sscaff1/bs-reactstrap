@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "reactstrap": "^5.0.0",
-    "reason-react": "^0.3.4"
+    "reason-react": "^0.4.2"
   },
   "scripts": {
     "build": "bsb -make-world",
