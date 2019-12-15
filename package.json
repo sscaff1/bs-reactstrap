@@ -1,6 +1,6 @@
 {
   "name": "@ahrefs/bs-reactstrap",
-  "version": "0.5.5",
+  "version": "1.0.3",
   "description": "Bucklescript bindings for Reactstrap",
   "homepage": "https://github.com/ahrefs/bs-reactstrap#readme",
   "repository": "git@github.com:ahrefs/bs-reactstrap.git",
@@ -22,16 +22,17 @@
     "reasonml"
   ],
   "devDependencies": {
-    "bs-platform": "^4.0.3"
+    "bs-platform": "^5.0.3",
+    "reason-react": "^0.7.0"
   },
   "dependencies": {
     "reactstrap": "^5.0.0"
   },
   "peerDependencies": {
-    "reason-react": "^0.5.3"
+    "reason-react": "^0.7.0"
   },
   "scripts": {
-    "refmt": "find ./src -type f -name \"*.re\" | xargs refmt --in-place",
+    "refmt": "find ./src -type f -name \"*.re\" | xargs bsrefmt --in-place",
     "build": "bsb -make-world",
     "watch": "bsb -make-world -w",
     "clean": "bsb -clean-world",

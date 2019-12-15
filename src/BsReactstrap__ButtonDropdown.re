@@ -1,14 +1,66 @@
-[@bs.module "reactstrap"]
-external buttonDropdown: ReasonReact.reactClass = "ButtonDropdown";
+[@bs.module "reactstrap"] [@react.component]
+external make:
+  (
+    ~disabled: bool=?,
+    ~dropup: 'a=?,
+    ~direction: 'b=?,
+    ~isOpen: bool=?,
+    ~nav: bool=?,
+    ~active: bool=?,
+    ~addonType: 'c=?,
+    ~size: string=?,
+    ~tag: string=?,
+    ~toggle: 'd=?,
+    ~className: string=?,
+    ~cssModule: 'e=?,
+    ~inNavbar: bool=?,
+    ~children: React.element=?,
+    unit
+  ) =>
+  React.element =
+  "ButtonDropdown";
 
-[@bs.obj]
-external makeProps:
-  (~isOpen: bool=?, ~toggle: ReactEvent.Mouse.t => unit=?, unit) => _ =
-  "";
+module Jsx2 = {
+  let component = ReasonReact.statelessComponent(__MODULE__);
 
-let make = (~isOpen=?, ~toggle=?, children) =>
-  ReasonReact.wrapJsForReason(
-    ~reactClass=buttonDropdown,
-    ~props=makeProps(~isOpen?, ~toggle?, ()),
-    children,
-  );
+  let make =
+      (
+        ~disabled=?,
+        ~dropup=?,
+        ~direction=?,
+        ~isOpen=?,
+        ~nav=?,
+        ~active=?,
+        ~addonType=?,
+        ~size=?,
+        ~tag=?,
+        ~toggle=?,
+        ~className=?,
+        ~cssModule=?,
+        ~inNavbar=?,
+        children,
+      ) => {
+    let children = React.array(children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
+      makeProps(
+        ~disabled?,
+        ~dropup?,
+        ~direction?,
+        ~isOpen?,
+        ~nav?,
+        ~active?,
+        ~addonType?,
+        ~size?,
+        ~tag?,
+        ~toggle?,
+        ~className?,
+        ~cssModule?,
+        ~inNavbar?,
+        ~children,
+        (),
+      ),
+      children,
+    );
+  };
+};

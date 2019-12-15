@@ -1,15 +1,39 @@
-[@bs.module "reactstrap"]
-external listGroup: ReasonReact.reactClass = "ListGroup";
+[@bs.module "reactstrap"] [@react.component]
+external make:
+  (
+    ~tag: 'a=?,
+    ~flush: bool=?,
+    ~className: string=?,
+    ~cssModule: 'b=?,
+    ~children: React.element=?,
+    unit
+  ) =>
+  React.element =
+  "ListGroup";
 
-[@bs.obj]
-external makeProps:
-  (~tag: 'a=?, ~flush: bool=?, ~className: string=?, ~cssModule: 'b=?, unit) =>
-  _ =
-  "";
+module Jsx2 = {
+  let component = ReasonReact.statelessComponent(__MODULE__);
 
-let make = (~tag=?, ~flush=?, ~className=?, ~cssModule=?, children) =>
-  ReasonReact.wrapJsForReason(
-    ~reactClass=listGroup,
-    ~props=makeProps(~tag?, ~flush?, ~className?, ~cssModule?, ()),
-    children,
-  );
+  let make =
+      (
+        ~tag=?,
+        ~flush=?,
+        ~className=?,
+        ~cssModule=?,
+        children,
+      ) => {
+    let children = React.array(children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
+      makeProps(
+        ~tag?,
+        ~flush?,
+        ~className?,
+        ~cssModule?,
+        ~children,
+        (),
+      ),
+      children,
+    );
+  };
+};

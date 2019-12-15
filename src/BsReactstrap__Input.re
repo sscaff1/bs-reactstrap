@@ -1,7 +1,5 @@
-[@bs.module "reactstrap"] external input: ReasonReact.reactClass = "Input";
-
-[@bs.obj]
-external makeProps:
+[@bs.module "reactstrap"] [@react.component]
+external make:
   (
     ~_type: string=?,
     ~size: string=?,
@@ -19,46 +17,56 @@ external makeProps:
     ~onFocus: ReactEvent.Form.t => unit=?,
     ~placeholder: string=?,
     ~value: string=?,
+    ~min: float=?,
+    ~max: float=?,
     ~rows: int=?,
     ~name: string=?,
     ~id: string=?,
     ~className: string=?,
     ~cssModule: 'e=?,
+    ~readOnly: bool=?,
+    ~children: React.element=?,
     unit
   ) =>
-  _ =
-  "";
+  React.element =
+  "Input";
 
-let make =
-    (
-      ~type_=?,
-      ~size=?,
-      ~bsSize=?,
-      ~state=?,
-      ~valid=?,
-      ~invalid=?,
-      ~tag=?,
-      ~innerRef=?,
-      ~static=?,
-      ~plaintext=?,
-      ~addon=?,
-      ~onChange=?,
-      ~onBlur=?,
-      ~onFocus=?,
-      ~placeholder=?,
-      ~value=?,
-      ~rows=?,
-      ~name=?,
-      ~id=?,
-      ~className=?,
-      ~cssModule=?,
-      children,
-    ) =>
-  ReasonReact.wrapJsForReason(
-    ~reactClass=input,
-    ~props=
+module Jsx2 = {
+  let component = ReasonReact.statelessComponent(__MODULE__);
+
+  let make =
+      (
+        ~_type=?,
+        ~size=?,
+        ~bsSize=?,
+        ~state=?,
+        ~valid=?,
+        ~invalid=?,
+        ~tag=?,
+        ~innerRef=?,
+        ~static=?,
+        ~plaintext=?,
+        ~addon=?,
+        ~onChange=?,
+        ~onBlur=?,
+        ~onFocus=?,
+        ~placeholder=?,
+        ~value=?,
+        ~min=?,
+        ~max=?,
+        ~rows=?,
+        ~name=?,
+        ~id=?,
+        ~className=?,
+        ~cssModule=?,
+        ~readOnly=?,
+        children,
+      ) => {
+    let children = React.array(children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
       makeProps(
-        ~_type=?type_,
+        ~_type?,
         ~size?,
         ~bsSize?,
         ~state?,
@@ -74,12 +82,18 @@ let make =
         ~onFocus?,
         ~placeholder?,
         ~value?,
+        ~min?,
+        ~max?,
         ~rows?,
         ~name?,
         ~id?,
         ~className?,
         ~cssModule?,
+        ~readOnly?,
+        ~children,
         (),
       ),
-    children,
-  );
+      children,
+    );
+  };
+};

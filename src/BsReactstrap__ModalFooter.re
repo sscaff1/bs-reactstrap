@@ -1,14 +1,36 @@
-[@bs.module "reactstrap"]
-external modalFooter: ReasonReact.reactClass = "ModalFooter";
+[@bs.module "reactstrap"] [@react.component]
+external make:
+  (
+    ~tag: 'a=?,
+    ~className: string=?,
+    ~cssModule: 'b=?,
+    ~children: React.element=?,
+    unit
+  ) =>
+  React.element =
+  "ModalFooter";
 
-[@bs.obj]
-external makeProps:
-  (~tag: 'a=?, ~className: string=?, ~cssModule: 'b=?, unit) => _ =
-  "";
+module Jsx2 = {
+  let component = ReasonReact.statelessComponent(__MODULE__);
 
-let make = (~tag=?, ~className=?, ~cssModule=?, children) =>
-  ReasonReact.wrapJsForReason(
-    ~reactClass=modalFooter,
-    ~props=makeProps(~tag?, ~className?, ~cssModule?, ()),
-    children,
-  );
+  let make =
+      (
+        ~tag=?,
+        ~className=?,
+        ~cssModule=?,
+        children,
+      ) => {
+    let children = React.array(children);
+    ReasonReactCompat.wrapReactForReasonReact(
+      make,
+      makeProps(
+        ~tag?,
+        ~className?,
+        ~cssModule?,
+        ~children,
+        (),
+      ),
+      children,
+    );
+  };
+};
